@@ -11,3 +11,5 @@
 /ApolloApiReader/bin/Debug/net6.0
 /ApolloApiReader/obj
 /ReadExcelFile/obj
+/.vs/ApolloApiReader/DesignTimeBuild
+/.vs/ApolloApiReader/v17

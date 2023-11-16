@@ -119,6 +119,70 @@ namespace ApolloApiReader
 
                 document.SaveAs(filePath);
 
+                workSheet = document.Workbook.Worksheets.ByName("nocompanies");
+
+                var rowToCheck = workSheet.Rows;
+                int iRowsToProcess = 0;
+                for (int row = 643; row <= 646; row++)
+                {
+                    var companyCell = workSheet.Cell(row, 7).ValueAsString;
+                    var RevenuecellAfterProces = workSheet.Cell(row, 9).ValueAsString;
+                    var EmployeecellAfterProcess = workSheet.Cell(row, 10).ValueAsString;
+                    var IndustrycellAfterProcess = workSheet.Cell(row, 11).ValueAsString;
+
+                    var LastNameCell = workSheet.Cell(row, 2).ValueAsString;
+                    var FirstNameCell = workSheet.Cell(row, 1).ValueAsString;
+
+                    string fullName = $"{LastNameCell}, {FirstNameCell}";
+
+                    //create an if statement for the last 4 variables null or empty
+
+                    if (string.IsNullOrEmpty(companyCell) && string.IsNullOrEmpty(RevenuecellAfterProces) &&
+                        string.IsNullOrEmpty(EmployeecellAfterProcess) && string.IsNullOrEmpty(IndustrycellAfterProcess))
+                    {
+                        // check for email domain
+
+                        Console.WriteLine("Row {0} of {1}", row, 646);
+
+                        var searchPeople = _apiConsumer.SeachDataByFullName(fullName).WaitAsync(new TimeSpan(0, 0, 1)).Result;
+
+                        if (searchPeople == null)
+                        {
+                            Console.WriteLine("No data found for {0}", fullName);
+                            continue;
+                        }
+                        else if (searchPeople.People == null)
+                        {
+                            Console.WriteLine("null No People data found for {0}", fullName);
+                            continue;
+                        }
+                        else if (searchPeople.People.Count == 0)
+                        {
+                            Console.WriteLine("cero No People data found for {0}", fullName);
+                            continue;
+                        }
+                        else if (searchPeople.People.First().EmploymentHistory == null)
+                        {
+                            Console.WriteLine("No EmployementHistory for {0}", fullName);
+                            continue;
+                        }
+                        else if (searchPeople.People.First().EmploymentHistory.Count == 0)
+                        {
+                            Console.WriteLine("No EmployementHistory for {0}", fullName);
+                            continue;
+                        }
+                        else if (searchPeople.People.First().EmploymentHistory.First().OrganizationId == null)
+                        {
+                            Console.WriteLine("EmployementHistory FOUND but no ORGANIZATION for {0}", fullName);
+                            continue;
+                        }
+                        else
+                        {
+                            Console.WriteLine("EmployementHistory FOUND for {0}", fullName);
+                        }
+                    }
+                }
+
                 Console.WriteLine("EXCEL SAVED");
 
             }
