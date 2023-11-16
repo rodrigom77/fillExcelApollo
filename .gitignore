@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/ApiReader/bin/Debug/net6.0
+/.vs/ApolloApiReader/FileContentIndex
+/ApiReader/obj
+/ApolloApiConsumption/bin/Debug/netstandard2.1
+/ApolloApiConsumption/obj/Debug/netstandard2.1
+/ApolloApiConsumption/obj
+/ApolloApiReader/bin/Debug/net6.0
+/ApolloApiReader/obj
+/ReadExcelFile/obj
